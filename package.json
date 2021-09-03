@@ -1,0 +1,53 @@
+{
+  "name": "biliroku-minyami",
+  "version": "0.1.0",
+  "main": "dist/main.js",
+  "homepage": ".",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^11.2.7",
+    "@testing-library/user-event": "^12.8.3",
+    "@types/jest": "^26.0.24",
+    "@types/node": "^12.20.23",
+    "@types/react": "^17.0.19",
+    "@types/react-dom": "^17.0.9",
+    "antd": "^4.16.13",
+    "electron": "^14.0.0",
+    "minyami": "^4.2.11",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "4.0.3",
+    "typescript": "^4.4.2",
+    "web-vitals": "^1.1.2"
+  },
+  "scripts": {
+    "start-react": "react-scripts start",
+    "dev": "react-scripts start",
+    "build-react": "react-scripts build",
+    "test-react": "react-scripts test",
+    "eject-react": "react-scripts eject",
+    "start-electron": "electron .",
+    "build-electron": "tsc --p tsconfig.core.json",
+    "build": "npm run build-react && npm run build-electron",
+    "start": "SET NODE_ENV=develop && npm run build-electron && electron ."
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
