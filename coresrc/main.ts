@@ -1,45 +1,59 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, CommandLine } from "electron";
 import * as path from "path";
 import * as url from 'url'
 
-function createWindow() {
-  // Create the browser window.
-  const mainWindow = new BrowserWindow({
-    height: 600,
-    webPreferences: {
-      preload: path.join(__dirname, "preload.js"),
-    },
-    width: 800,
-  });
 
-  if (process.env.NODE_ENV.startsWith("develop")){
-    mainWindow.loadURL("http://localhost:3000");
-  } else {
-    mainWindow.loadURL(url.pathToFileURL(path.join(__dirname, "../build/index.html")).toString());
-  }
+//单例锁
+let mainWindow: BrowserWindow = null;
+const singleInstanceLock = app.requestSingleInstanceLock();
 
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+if (!singleInstanceLock) {
+    app.quit(); //已经存在一个实例了，本实例自行退出
+} else {
+    app.on("second-instance", (event, commandLine, workingDirectory) => {
+        if (mainWindow) {
+            mainWindow.show();
+            if (mainWindow.isMinimized()) {
+                mainWindow.restore();
+            }
+            mainWindow.focus();
+        }
+    });
+
+    app.on("ready", () => {
+        createWindow();
+
+        app.on("activate", function () {
+            if (BrowserWindow.getAllWindows().length === 0) {
+                createWindow()
+            };
+        });
+    });
+
+    app.on("window-all-closed", () => {
+        if (process.platform !== "darwin") {
+            app.quit();
+        }
+    });
 }
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
-app.on("ready", () => {
-  createWindow();
 
-  app.on("activate", function () {
-    // On macOS it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
-    if (BrowserWindow.getAllWindows().length === 0) createWindow();
-  });
-});
 
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
-app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") {
-    app.quit();
-  }
-});
+function createWindow() {
+    mainWindow = new BrowserWindow({
+        height: 600,
+        webPreferences: {
+            preload: path.join(__dirname, "preload.js"),
+        },
+        width: 800,
+    });
+
+    if (process.env.NODE_ENV?.startsWith("develop")) {
+        mainWindow.loadURL("http://localhost:3000");
+    } else {
+        mainWindow.loadURL(url.pathToFileURL(path.join(__dirname, "../build/index.html")).toString());
+    }
+
+    //TODO: 测试打开DevTools
+    //mainWindow.webContents.openDevTools();
+}
