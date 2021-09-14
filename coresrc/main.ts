@@ -1,6 +1,7 @@
-import { app, BrowserWindow, CommandLine } from "electron";
+import { app, BrowserWindow } from "electron";
 import * as path from "path";
-import * as url from 'url'
+import * as url from 'url';
+import startApp from './serverapp';
 
 
 //单例锁
@@ -21,11 +22,12 @@ if (!singleInstanceLock) {
     });
 
     app.on("ready", () => {
-        createWindow();
+        let port = startApp();
+        createWindow(port);
 
         app.on("activate", function () {
             if (BrowserWindow.getAllWindows().length === 0) {
-                createWindow()
+                createWindow(port);
             };
         });
     });
@@ -39,21 +41,16 @@ if (!singleInstanceLock) {
 
 
 
-function createWindow() {
+function createWindow(port: number) {
     mainWindow = new BrowserWindow({
+        width: 800,
         height: 600,
         webPreferences: {
             preload: path.join(__dirname, "preload.js"),
-        },
-        width: 800,
+        }
     });
 
-    if (process.env.NODE_ENV?.startsWith("develop")) {
-        mainWindow.loadURL("http://localhost:3000");
-    } else {
-        mainWindow.loadURL(url.pathToFileURL(path.join(__dirname, "../build/index.html")).toString());
-    }
-
+    mainWindow.loadURL("http://localhost:" + port);
     //TODO: 测试打开DevTools
     //mainWindow.webContents.openDevTools();
 }
