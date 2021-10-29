@@ -1,12 +1,13 @@
 import * as Koa from 'koa';
 import * as serve from 'koa-static';
 import * as path from "path";
+import config from './config/config'
 
 
 function startApp() {
     const app = new Koa();
 
-    const port: number = parseInt(process.env.PORT) || 46015;
+    const port: number = config.httpPort;
 
     const home = serve(path.join(__dirname, "../build/"));
 

@@ -1,0 +1,7 @@
+{
+    //后端服务使用的HTTP端口号
+    "httpPort": 46015,
+
+    //密码哈希存储时加密用，填写任意长度任意内容的字符串。注意一旦安装完成就不要修改，修改后所有用户密码都会失效。
+    "sk": ":=]IP@Q0Rm*ebwJRRtx6IdVE|D,HbfN)Da_ep'GY,$T#eaKQ>K|w17TgD4/42ATle<dej)=m-,1Z/Ep5?C,LutC:3P=-]3W)oH={hH@piHVP.TemJqoCVC>}#&0D/"
+}

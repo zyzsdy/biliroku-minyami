@@ -1,6 +1,4 @@
 import { app, BrowserWindow } from "electron";
-import * as path from "path";
-import * as url from 'url';
 import startApp from './serverapp';
 
 
@@ -44,10 +42,7 @@ if (!singleInstanceLock) {
 function createWindow(port: number) {
     mainWindow = new BrowserWindow({
         width: 800,
-        height: 600,
-        webPreferences: {
-            preload: path.join(__dirname, "preload.js"),
-        }
+        height: 600
     });
 
     mainWindow.loadURL("http://localhost:" + port);
