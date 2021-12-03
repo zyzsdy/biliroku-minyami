@@ -1,5 +1,6 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
+config.yaml
+*.db3
 # dependencies
 /node_modules
 /.pnp

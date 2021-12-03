@@ -1,0 +1,19 @@
+# 后端服务使用的HTTP端口号
+httpPort: 46015
+
+# 密码哈希存储时加密用，填写任意长度任意内容的字符串。注意一旦安装完成就不要修改，修改后所有用户密码都会失效。
+sk: :=]IP@Q0Rm*ebwJRRtx6IdVE|D,HbfN)Da_ep'GY,$T#eaKQ>K|w17TgD4/42ATle<dej)=m-,1Z/Ep5?C,LutC:3P=-]3W)oH={hH@piHVP.TemJqoCVC>}#&0D/
+
+# 数据库类型，可选 sqlite 或 mysql 。若选择sqlite需在下面sqlite配置项中填写数据库存储路径，若选择mysql则需在mysql配置项中填写连接的主机、端口号、用户名和密码
+dbType: sqlite
+
+sqlite:
+    database: ./coreinfo.sqlitedb.db3
+
+mysql:
+    host: 127.0.0.1
+    port: 3306
+    username: biliminya
+    password: T,(,U,YnZ
+    database: biliminya
+    charset: utf8mb4
